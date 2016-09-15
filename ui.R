@@ -33,13 +33,20 @@ shinyUI(
             ),
       column(rightWidth,
         navbarPage("Comicbook TV",
-          tabPanel("Oneshow",
-            h3("Próba")),
-          tabPanel("compareShows",
-            h3("Próba")),
-          tabPanel("Allshows",
-            h3("Próba")),
-          tabPanel("Aboutthisapp",
+          tabPanel("One show",
+		   value = "oneShow",
+            plotOutput("oneShowPlot")
+		  ),           
+          tabPanel("Compare shows",
+		   value = "compareShows",
+	    plotOutput("compareShowsPlot")
+		  ),
+          tabPanel("All shows",
+		   value = "compareShows",
+	    plotOutput("allShowsPlot")
+		  ),
+          tabPanel("About this app",
+		   value = "aboutThisApp",
             includeMarkdown("www/about.md")),
           id = "tabPanels"
 	))
