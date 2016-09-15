@@ -10,6 +10,7 @@ library(dplyr)
 library(tidyr)
 library(lubridate)
 library(ggplot2)
+library(markdown)
 
 showsTitles <- c("aca", "aos", "arr", "con", "dde", "fla", "got", "izo", "jjo", "lot", "luc", "pre", "sgi")
 episodes %>%
