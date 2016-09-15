@@ -20,6 +20,8 @@ defaultSeasons <- max(episodes$season)
 defaultSliderLeft <- min(episodes$imdbRating)
 defaultSliderRight <- max(episodes$imdbRating)
 defaultSeasonsNumber <- max(episodes$season[episodes$showTitle == names(showsTitles)[1]])
+defaultSeasonsChoices <- as.character(1:defaultSeasonsNumber)
+names(defaultSeasonsChoices) <- as.numeric(defaultSeasonsChoices)
 
-leftWidth <- 3
+leftWidth <- 2
 rightWidth <- 12 - leftWidth
