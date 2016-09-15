@@ -1,10 +1,6 @@
 library(shiny)
 library(devtools)
 library(ggvis)
-# install_github("mstaniak/comicbookshows", dependencies = F)
-# if(!require(ToolsForTVShowsApp)) {
-# 	install_github("mstaniak/comicbookshows")
-# }
 library(ToolsForTVShowsApp)
 library(dplyr)
 library(tidyr)
@@ -21,6 +17,9 @@ episodes %>%
 defaultMinDate <- min(episodes$airDate) 
 defaultMaxDate <- max(episodes$airDate)
 defaultSeasons <- max(episodes$season)
+defaultSliderLeft <- min(episodes$imdbRating)
+defaultSliderRight <- max(episodes$imdbRating)
+defaultSeasonsNumber <- max(episodes$season[episodes$showTitle == names(showsTitles)[1]])
 
 leftWidth <- 3
 rightWidth <- 12 - leftWidth
