@@ -2,6 +2,9 @@ shinyUI(
   fluidPage(
     fluidRow(
       column(leftWidth,
+	br(),
+	br(),
+	br(),
 	selectInput("firstShow",
 		    "Select show to display",
 		    choices = showsTitles,
@@ -35,12 +38,16 @@ shinyUI(
         navbarPage("Comicbook TV",
           tabPanel("One show",
 		   value = "oneShow",
-            plotOutput("oneShowPlot")
-		  ),           
+            plotOutput("oneShowPlot",
+		       click = "plotOneClick"),
+	    textOutput("oneShowInfo")),           
           tabPanel("Compare shows",
 		   value = "compareShows",
-	    plotOutput("compareShowsPlot")
-		  ),
+	    plotOutput("compareShowsPlot"),
+	    splitLayout(cellWidths = c("50%", "50%"),
+			textOutput("compareInfo1"),
+			textOutput("compareInfo2"))
+	    ),
           tabPanel("All shows",
 		   value = "compareShows",
 	    plotOutput("allShowsPlot")
