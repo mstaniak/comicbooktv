@@ -19,22 +19,22 @@ shinyServer(function(input, output, session) {
   }) 
 
   firstEpCounter <- reactive({
-    filteredData() %>%
+    filteredData()[[2]] %>%
       filter(showTitle == firstName()) %>%
       n_distinct()
   })
   secondEpCounter <- reactive({
-    filteredData() %>%
+    filteredData()[[2]] %>%
       filter(showTitle == secondName()) %>%
       n_distinct()
   })
 
   output$oneShowPlot  <- renderPlot({
-    plotRatings(filteredData) 
+    plotRatings(filteredData()) 
   })
 
   output$compareShowsPlot <- renderPlot({
-    plotRatings(filteredData)
+    plotRatings(filteredData())
   })
 
   output$oneShowInfo <- renderText({
