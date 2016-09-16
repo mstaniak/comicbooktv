@@ -4,11 +4,9 @@ if(!require(ToolsForTVShowsApp)) {
   devtools:: install_github("mstaniak/comicbookshows", dependencies = FALSE)
 }
 library(dplyr)
-# library(tidyr)
 library(lubridate)
 library(ggplot2)
 library(markdown)
-# library(ToolsForTVShowsApp)
 library(lazyeval)
 
 showsTitles <- c("aca", "aos", "arr", "con", "dde", "fla", "got", "izo", "jjo", "lot", "luc", "pre", "sgi")
