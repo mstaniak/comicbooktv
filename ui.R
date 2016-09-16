@@ -45,7 +45,7 @@ shinyUI(
 		   value = "oneShow",
             plotOutput("oneShowPlot",
 		       click = "plotOneClick"),
-	    textOutput("oneShowInfo")),           
+	    htmlOutput("oneShowInfo")),           
           tabPanel("Compare shows",
 		   value = "compareShows",
 	    plotOutput("compareShowsPlot"),
