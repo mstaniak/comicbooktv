@@ -1,7 +1,12 @@
 shinyServer(function(input, output, session) {
   
   filteredData <- reactive({
-    filterToPlot(showNames = c(firstName(), secondName()),
+    if(input$tabPanels == "oneShow") {
+      chosenNames <- firstName()
+    } else {
+      chosenNames <- c(firstName(), secondName())
+    } 
+    filterToPlot(showNames = chosenNames,
 		 typeRating = input$typeRating,
 		 seasons = input$seasons,
 		 minRating = input$rt[1],
@@ -55,7 +60,22 @@ shinyServer(function(input, output, session) {
 	  "episodes in this range.")
   })
 
+  output$oneShowInfo <- renderUI({
+    if(is.null(input$plotOneClick)) {
+      return("Click a point to display details about the episode. ")
+    } else {
+        point <- unlist(nearPoints(filteredData()[[2]], input$plotOneClick, xvar = "airDate", yvar = "rating"))
+        HTML(paste(paste("Episode details:", paste(point["episode"], point["season"], sep = "x")), 
+		   paste("Title:", point["title"]),
+		   paste("Rating:", round(as.numeric(point["rating"]), 2)),
+		   paste("Number of votes:", point["numOfVotes"]),
+		   sep = "<br />"))
+    }
+  })
+
   output$compareBot <- renderText({
+#     filteredData()[[2]] %>%
+#       filter(all.equal(airDate, ))
     "Episode details:"
   })
 })
