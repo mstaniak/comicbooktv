@@ -18,7 +18,7 @@ shinyUI(
 		   "",
 		   choices = c("IMDb ratings" = "imdbRating",
 			       "Viewership" = "nielsenRating"),
-		   selected = "IMDb ratings"),
+		   selected = "imdbRating"),
         sliderInput("rt",
                     "Rating",
                     min = floor(defaultSliderLeft),
@@ -49,17 +49,14 @@ shinyUI(
           tabPanel("Compare shows",
 		   value = "compareShows",
 	    plotOutput("compareShowsPlot"),
-	    splitLayout(cellWidths = c("50%", "50%"),
-	      textOutput("compareInfo1"),
-              textOutput("compareInfo2"))
-	    ),
+	    textOutput("compareTop"),
+	    textOutput("compareMid"),
+	    textOutput("compareBot")),
           tabPanel("All shows",
 		   value = "compareShows",
-	    plotOutput("allShowsPlot")
-		  ),
+	    plotOutput("allShowsPlot")),
           tabPanel("About this app",
 		   value = "aboutThisApp",
             includeMarkdown("www/about.md")),
-          id = "tabPanels"
-	))
+          id = "tabPanels"))
 )))
