@@ -14,6 +14,11 @@ shinyUI(
 		      "Select show to compare",
 		      choices = showsTitles,
 		      selected = showsTitles[2])),
+        radioButtons("typeRating",
+		   "",
+		   choices = c("IMDb ratings" = "imdbRating",
+			       "Viewership" = "nielsenRating"),
+		   selected = "IMDb ratings"),
         sliderInput("rt",
                     "Rating",
                     min = floor(defaultSliderLeft),
@@ -45,8 +50,8 @@ shinyUI(
 		   value = "compareShows",
 	    plotOutput("compareShowsPlot"),
 	    splitLayout(cellWidths = c("50%", "50%"),
-			textOutput("compareInfo1"),
-			textOutput("compareInfo2"))
+	      textOutput("compareInfo1"),
+              textOutput("compareInfo2"))
 	    ),
           tabPanel("All shows",
 		   value = "compareShows",
