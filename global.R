@@ -1,8 +1,9 @@
 library(shiny)
 library(devtools)
-if(!require(ToolsForTVShowsApp)) {
-  devtools:: install_github("mstaniak/comicbookshows", dependencies = FALSE)
-}
+# if(!require(ToolsForTVShowsApp)) {
+#   devtools:: install_github("mstaniak/comicbookshows", dependencies = FALSE)
+# }
+devtools::install_github("mstaniak/comicbookshows", dependencies = FALSE)
 library(dplyr)
 library(lubridate)
 library(ggplot2)
