@@ -60,22 +60,11 @@ shinyServer(function(input, output, session) {
 	  "episodes in this range.")
   })
 
-  output$oneShowInfo <- renderUI({
-    if(is.null(input$plotOneClick)) {
-      return("Click a point to display details about the episode. ")
-    } else {
-        point <- unlist(nearPoints(filteredData()[[2]], input$plotOneClick, xvar = "airDate", yvar = "rating"))
-        HTML(paste(paste("Episode details:", paste(point["episode"], point["season"], sep = "x")), 
-		   paste("Title:", point["title"]),
-		   paste("Rating:", round(as.numeric(point["rating"]), 2)),
-		   paste("Number of votes:", point["numOfVotes"]),
-		   sep = "<br />"))
-    }
+  output$oneShowInfo <- renderText({
+    tooltip(filteredData()[[2]], input$plotOneClick, input$typeRating)
   })
 
   output$compareBot <- renderText({
-#     filteredData()[[2]] %>%
-#       filter(all.equal(airDate, ))
-    "Episode details:"
+    tooltip(filteredData()[[2]], input$plotTwoClick, input$typeRating)
   })
 })
