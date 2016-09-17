@@ -24,6 +24,7 @@ shinyUI(
 			   choices = defaultSeasonsChoicesTwo,
 			   selected = defaultSeasonsChoicesTwo,
 			   inline = TRUE)),
+	useShinyjs(),
         radioButtons("typeRating",
 		   "Type of ratings",
 		   choices = c("IMDb ratings" = "imdbRating",

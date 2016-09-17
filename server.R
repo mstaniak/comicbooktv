@@ -91,6 +91,16 @@ shinyServer(function(input, output, session) {
 			     choices = seasonsChoicesTwo,
 			     selected = seasonsChoicesTwo,
 			     inline = TRUE)
+
+    if(isNetflix()) {
+      updateRadioButtons(session, "typeRating",
+			 selected = "imdbRating")
+#       shinyjs::disable("typeRating")
+      shinyjs::disable(id = "typeRating")
+    } else {
+#       shinyjs::enable("typeRating")
+      shinyjs::enable(id = "typeRating")
+    }
   })
 
   output$oneShowPlot  <- renderPlot({
@@ -109,14 +119,6 @@ shinyServer(function(input, output, session) {
     }
   })
 
-  output$oneShowInfo <- renderText({
-    if(is.null(input$plotOneClick)) {
-      return("")
-    } else {
-        paste(input$plotOneClick$x, input$plotOneClick$y)	    
-      }  
-  })
-
   output$compareTop <- renderText({
     paste(firstName(), "has", firstEpCounter(),
 	  "episodes in this range.")
@@ -128,10 +130,18 @@ shinyServer(function(input, output, session) {
   })
 
   output$oneShowInfo <- renderText({
-   giveTooltip(episodesPlus, input$plotOneClick, input$typeRating)
+    if(isNetflix()) {
+      giveTooltip(filterForNetflix(), input$plotOneClick, "imdbRating")
+    } else {
+      giveTooltip(filteredData()[[2]], input$plotOneClick, input$typeRating)
+    }
   })
 
   output$compareBot <- renderText({
-    giveTooltip(episodesPlus, input$plotTwoClick, input$typeRating)
+    if(isNetflix()) {
+      giveTooltip(filterForNetflix(), input$plotTwoClick, "imdbRating")
+    } else {
+      giveTooltip(filteredData()[[2]], input$plotTwoClick, input$typeRating)
+    }
   })
 })
