@@ -11,6 +11,10 @@ shinyServer(function(input, output, session) {
     }
   }) 
   
+  isNetflix <- reactive({
+    any(c(firstName(), secondName()) %in% netflixShows)
+  })
+  
   filteredData <- reactive({
     seasonsList <- list(input$firstSeasons, input$secondSeasons)
     if(input$tabPanels == "oneShow") {
@@ -23,6 +27,16 @@ shinyServer(function(input, output, session) {
 		 maxRating = input$rt[2],
 		 minDate = input$dates[1],
 		 maxDate = input$dates[2])
+  })
+  filterForNetflix <- reactive({
+    if(!isNetflix()) {
+      NULL
+    } else {
+	filterNetflix(showNames = c(firstName(), secondName()),
+		      seasons = c(input$firstSeasons[1], input$secondSeasons[1]),
+		      minRating = input$rt[1],
+		      maxRating = input$rt[2])
+    }
   })
 
   firstEpCounter <- reactive({
@@ -80,11 +94,19 @@ shinyServer(function(input, output, session) {
   })
 
   output$oneShowPlot  <- renderPlot({
-    plotRatings(filteredData(), trend = input$trend) 
+    if(isNetflix()) {
+      plotNetflix(filterForNetflix())
+    } else {
+      plotRatings(filteredData(), trend = input$trend) 
+    }
   })
 
   output$compareShowsPlot <- renderPlot({
-    plotRatings(filteredData(), trend = input$trend)
+    if(isNetflix()) {
+      plotNetflix(filterForNetflix())
+    } else {
+      plotRatings(filteredData(), trend = input$trend, background = FALSE)
+    }
   })
 
   output$oneShowInfo <- renderText({
@@ -106,10 +128,10 @@ shinyServer(function(input, output, session) {
   })
 
   output$oneShowInfo <- renderText({
-   giveTooltip(filteredData()[[2]], input$plotOneClick, input$typeRating)
+   giveTooltip(episodesPlus, input$plotOneClick, input$typeRating)
   })
 
   output$compareBot <- renderText({
-    giveTooltip(filteredData()[[2]], input$plotTwoClick, input$typeRating)
+    giveTooltip(episodesPlus, input$plotTwoClick, input$typeRating)
   })
 })
