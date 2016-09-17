@@ -18,7 +18,7 @@ shinyServer(function(input, output, session) {
     }
     filterToPlot(showNames = c(firstName(), secondName()),
 		 typeRating = input$typeRating,
-		 seasons = seasonsList)
+		 seasons = seasonsList,
 		 minRating = input$rt[1],
 		 maxRating = input$rt[2],
 		 minDate = input$dates[1],
