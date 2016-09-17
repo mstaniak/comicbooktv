@@ -95,10 +95,12 @@ shinyServer(function(input, output, session) {
     if(isNetflix()) {
       updateRadioButtons(session, "typeRating",
 			 selected = "imdbRating")
-#       shinyjs::disable("typeRating")
       shinyjs::disable(id = "typeRating")
+      updateCheckboxGroupInput(session, "firstSeasons",
+			       selected = "1")
+      updateCheckboxGroupInput(session, "secondSeasons",
+			       selected = "1")
     } else {
-#       shinyjs::enable("typeRating")
       shinyjs::enable(id = "typeRating")
     }
   })
