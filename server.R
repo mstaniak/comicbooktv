@@ -133,17 +133,17 @@ shinyServer(function(input, output, session) {
 
   output$oneShowInfo <- renderText({
     if(isNetflix()) {
-      giveTooltip(filterForNetflix(), input$plotOneClick, "imdbRating")
+      giveDetails(filterForNetflix(), input$plotOneClick, "imdbRating", TRUE)
     } else {
-      giveTooltip(filteredData()[[2]], input$plotOneClick, input$typeRating)
+      giveDetails(filteredData()[[2]], input$plotOneClick, input$typeRating)
     }
   })
 
   output$compareBot <- renderText({
     if(isNetflix()) {
-      giveTooltip(filterForNetflix(), input$plotTwoClick, "imdbRating")
+      giveDetails(filterForNetflix(), input$plotTwoClick, "imdbRating", TRUE)
     } else {
-      giveTooltip(filteredData()[[2]], input$plotTwoClick, input$typeRating)
+      giveDetails(filteredData()[[2]], input$plotTwoClick, input$typeRating)
     }
   })
 })
