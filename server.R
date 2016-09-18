@@ -115,7 +115,7 @@ shinyServer(function(input, output, session) {
 
   output$oneShowPlot  <- renderPlot({
     if(isNetflix()) {
-      plotNetflix(filterForNetflix())
+      plotNetflix(filterForNetflix(), trend = input$trend)
     } else {
       if(input$typeRating == "vs") {
 	plotRatingsCompareVS(filteredData(), trend = input$trend)
@@ -127,7 +127,7 @@ shinyServer(function(input, output, session) {
 
   output$compareShowsPlot <- renderPlot({
     if(isNetflix()) {
-      plotNetflix(filterForNetflix())
+      plotNetflix(filterForNetflix(), trend = input$trend)
     } else {
       if(input$typeRating == "vs") {
         plotRatingsCompareVS(filteredData(), trend = input$trend)	
