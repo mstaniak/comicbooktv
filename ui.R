@@ -32,7 +32,7 @@ shinyUI(
 			       "IMDb vs viewership" = "vs"),
 		   selected = "imdbRating"),
 	checkboxInput("trend",
-		      "Display trend line",
+		      "Add trend line",
 		      value = FALSE),
 	checkboxInput("background",
 		      "Display other show's ratings in the background",
