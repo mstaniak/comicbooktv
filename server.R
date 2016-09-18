@@ -33,7 +33,7 @@ shinyServer(function(input, output, session) {
       NULL
     } else {
 	filterNetflix(showNames = c(firstName(), secondName()),
-		      seasons = c(input$firstSeasons[1], input$secondSeasons[1]),
+		      seasons = list(input$firstSeasons[1], input$secondSeasons[1]),
 		      minRating = input$rt[1],
 		      maxRating = input$rt[2])
     }
