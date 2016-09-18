@@ -21,7 +21,7 @@ shinyServer(function(input, output, session) {
       seasonsList <- list(input$firstSeasons, input$firstSeasons)
     }
     filterToPlot(showNames = c(firstName(), secondName()),
-		 typeRating = input$typeRating,
+		 chosenRating = input$typeRating,
 		 seasons = seasonsList,
 		 minRating = input$rt[1],
 		 maxRating = input$rt[2],
@@ -103,13 +103,25 @@ shinyServer(function(input, output, session) {
     } else {
       shinyjs::enable(id = "typeRating")
     }
+
+    if(input$typeRating == "vs") {
+      shinyjs::disable(id = "rt")
+      updateSliderInput(session, "rt",
+			value = c(defaultSliderLeft, defaultSliderRight))
+    } else {
+      shinyjs::enable(id = "rt")
+    }
   })
 
   output$oneShowPlot  <- renderPlot({
     if(isNetflix()) {
       plotNetflix(filterForNetflix())
     } else {
-      plotRatings(filteredData(), trend = input$trend) 
+      if(input$typeRating == "vs") {
+	plotRatingsCompareVS(filteredData(), trend = input$trend)
+      } else {
+	plotRatings(filteredData(),background = input$background, trend = input$trend) 
+      }
     }
   })
 
@@ -117,7 +129,11 @@ shinyServer(function(input, output, session) {
     if(isNetflix()) {
       plotNetflix(filterForNetflix())
     } else {
-      plotRatings(filteredData(), trend = input$trend, background = FALSE)
+      if(input$typeRating == "vs") {
+        plotRatingsCompareVS(filteredData(), trend = input$trend)	
+      } else {
+	plotRatings(filteredData(), background = input$background, trend = input$trend)
+      }
     }
   })
 
