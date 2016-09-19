@@ -16,9 +16,16 @@ shinyServer(function(input, output, session) {
   })
   
   filteredData <- reactive({
-    seasonsList <- list(input$firstSeasons, input$secondSeasons)
+    seasonsList <- vector("list", 2)
+    if(input$typeRating == "vs") {
+      seasonsList[[1]] <- input$firstSeasonsRadio
+      seasonsList[[2]] <- input$secondSeasonsRadio
+    } else {
+      seasonsList[[1]] <- input$firstSeasons
+      seasonsList[[2]] <- input$secondSeasons
+    }
     if(input$tabPanels == "oneShow") {
-      seasonsList <- list(input$firstSeasons, input$firstSeasons)
+      seasonsList[[2]] <- seasonsList[[1]]
     }
     filterToPlot(showNames = c(firstName(), secondName()),
 		 chosenRating = input$typeRating,
@@ -118,9 +125,10 @@ shinyServer(function(input, output, session) {
       plotNetflix(filterForNetflix(), trend = input$trend)
     } else {
       if(input$typeRating == "vs") {
-	plotRatingsCompareVS(filteredData(), trend = input$trend)
+	plotRatingsCompareVS(filteredData(), trend = input$trend)    
       } else {
-	plotRatings(filteredData(),background = input$background, trend = input$trend) 
+	plotRatings(filteredData(),background = input$background, trend = input$trend)
+# 	+ facet_wrap(~season)
       }
     }
   })

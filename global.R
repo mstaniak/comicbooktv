@@ -9,6 +9,7 @@ library(ggplot2)
 library(markdown)
 library(lazyeval)
 library(shinyjs)
+library(ggthemes)
 
 showsTitles <- c("aca", "aos", "arr", "con", "dde", "fla", "got", "izo", "jjo", "lot", "luc", "pre", "sgi")
 episodesPlus  %>%
