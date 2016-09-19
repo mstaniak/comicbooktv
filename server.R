@@ -6,7 +6,7 @@ shinyServer(function(input, output, session) {
   secondName <- reactive({
     if(input$tabPanels == "compareShows") {
       names(showsTitles)[showsTitles == input$secondShow]
-    } else if(input$tabPanels == "oneShow") {
+    } else {
       firstName()
     }
   }) 
@@ -87,28 +87,41 @@ shinyServer(function(input, output, session) {
     }
 
     seasonsChoices <- as.character(1:firstMaxSeason())
-    names(seasonsChoices) <- as.numeric(seasonsChoices)
+    names(seasonsChoices) <- seasonsChoices
     updateCheckboxGroupInput(session, "firstSeasons",
 			     choices = seasonsChoices,
 			     selected = seasonsChoices,
 			     inline = TRUE)
     seasonsChoicesTwo <- as.character(1:secondMaxSeason())
-    names(seasonsChoicesTwo) <- as.numeric(seasonsChoicesTwo)
+    names(seasonsChoicesTwo) <- seasonsChoicesTwo
     updateCheckboxGroupInput(session, "secondSeasons",
 			     choices = seasonsChoicesTwo,
 			     selected = seasonsChoicesTwo,
 			     inline = TRUE)
 
+    seasonsChoicesRadio <- as.character(1:firstMaxSeason())
+    names(seasonsChoicesRadio) <- seasonsChoicesRadio
+    updateRadioButtons(session, "firstSeasonsRadio",
+		       choices = seasonsChoicesRadio,
+		       inline = TRUE)
+    seasonsChoicesRadioTwo <- as.character(1:secondMaxSeason())
+    names(seasonsChoicesRadioTwo) <- seasonsChoicesRadioTwo
+    updateRadioButtons(session, "secondSeasonsRadio",
+		       choices = seasonsChoicesRadioTwo,
+		       inline = TRUE)
+
     if(isNetflix()) {
       updateRadioButtons(session, "typeRating",
 			 selected = "imdbRating")
       shinyjs::disable(id = "typeRating")
+      shinyjs::disable(id = "background")
       updateCheckboxGroupInput(session, "firstSeasons",
 			       selected = "1")
       updateCheckboxGroupInput(session, "secondSeasons",
 			       selected = "1")
     } else {
       shinyjs::enable(id = "typeRating")
+      shinyjs::enable(id = "background")
     }
 
     if(input$typeRating == "vs") {
@@ -118,18 +131,39 @@ shinyServer(function(input, output, session) {
     } else {
       shinyjs::enable(id = "rt")
     }
+    if(input$separate) {
+      shinyjs::disable(id = "dates") 
+    } else {
+      shinyjs::enable(id = "dates")
+    }
   })
 
   output$oneShowPlot  <- renderPlot({
     if(isNetflix()) {
-      plotNetflix(filterForNetflix(), trend = input$trend)
+      if(!input$separate) {
+	plotNetflix(filterForNetflix(), trend = input$trend) 
+      } else {
+	plotNetflix(filterForNetflix(), trend = input$trend) + facet_wrap(~season, scales = "free")
+      }
     } else {
       if(input$typeRating == "vs") {
 	plotRatingsCompareVS(filteredData(), trend = input$trend)    
       } else {
-	plotRatings(filteredData(),background = input$background, trend = input$trend)
-# 	+ facet_wrap(~season)
+	if(!input$separate) {
+	  plotRatings(filteredData(),background = input$background, trend = input$trend)
+	} else {
+	  plotRatings(filteredData(),background = input$background, trend = input$trend) + facet_wrap(~season, scales = "free")
+	}
       }
+    }
+
+  })
+  
+  output$oneShowInfo <- renderText({
+    if(isNetflix()) {
+      giveDetails(filterForNetflix(), input$plotOneClick, "imdbRating", TRUE)
+    } else {
+      giveDetails(filteredData(), input$plotOneClick, input$typeRating)
     }
   })
 
@@ -155,19 +189,12 @@ shinyServer(function(input, output, session) {
 	  "episodes in this range.")
   })
 
-  output$oneShowInfo <- renderText({
-    if(isNetflix()) {
-      giveDetails(filterForNetflix(), input$plotOneClick, "imdbRating", TRUE)
-    } else {
-      giveDetails(filteredData()[[2]], input$plotOneClick, input$typeRating)
-    }
-  })
-
-  output$compareBot <- renderText({
-    if(isNetflix()) {
-      giveDetails(filterForNetflix(), input$plotTwoClick, "imdbRating", TRUE)
-    } else {
-      giveDetails(filteredData()[[2]], input$plotTwoClick, input$typeRating)
-    }
-  })
+#   output$compareBot <- renderText({
+#     if(isNetflix()) {
+#       giveDetails(filterForNetflix(), input$plotTwoClick, "imdbRating", TRUE)
+#     } else {
+#       giveDetails(filteredData()[[2]], input$plotTwoClick, input$typeRating)
+#     }
+#   })
 })
+
