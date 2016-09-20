@@ -15,7 +15,8 @@ showsTitles <- c("aca", "aos", "arr", "con", "dde", "fla", "got", "izo", "jjo", 
 episodesPlus  %>%
   select(showTitle) %>%
   distinct() %>%
-  unlist(use.names = FALSE) -> names(showsTitles)
+  unlist(use.names = FALSE) %>%
+  sort() -> names(showsTitles)
 shows %>%
   select(showTitle, channel) %>%
   filter(channel == "Netflix") %>%

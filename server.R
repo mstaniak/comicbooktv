@@ -15,9 +15,9 @@ shinyServer(function(input, output, session) {
     any(c(firstName(), secondName()) %in% netflixShows)
   })
   
-  filteredData <- reactive({
+  seasonsList <- reactive({
     seasonsList <- vector("list", 2)
-    if(input$typeRating == "vs") {
+    if(input$typeRating == "vs" | input$tabPanels == "compareShows") {
       seasonsList[[1]] <- input$firstSeasonsRadio
       seasonsList[[2]] <- input$secondSeasonsRadio
     } else {
@@ -27,9 +27,13 @@ shinyServer(function(input, output, session) {
     if(input$tabPanels == "oneShow") {
       seasonsList[[2]] <- seasonsList[[1]]
     }
+    return(seasonsList)
+  })
+  
+  filteredData <- reactive({
     filterToPlot(showNames = c(firstName(), secondName()),
 		 chosenRating = input$typeRating,
-		 seasons = seasonsList,
+		 seasons = seasonsList(),
 		 minRating = input$rt[1],
 		 maxRating = input$rt[2],
 		 minDate = input$dates[1],
@@ -40,7 +44,7 @@ shinyServer(function(input, output, session) {
       NULL
     } else {
 	filterNetflix(showNames = c(firstName(), secondName()),
-		      seasons = list(input$firstSeasons[1], input$secondSeasons[1]),
+		      seasons = seasonsList(), 
 		      minRating = input$rt[1],
 		      maxRating = input$rt[2])
     }
@@ -115,6 +119,7 @@ shinyServer(function(input, output, session) {
 			 selected = "imdbRating")
       shinyjs::disable(id = "typeRating")
       shinyjs::disable(id = "background")
+      shinyjs::disable(id = "separate")
       updateCheckboxGroupInput(session, "firstSeasons",
 			       selected = "1")
       updateCheckboxGroupInput(session, "secondSeasons",
@@ -122,6 +127,7 @@ shinyServer(function(input, output, session) {
     } else {
       shinyjs::enable(id = "typeRating")
       shinyjs::enable(id = "background")
+      shinyjs::enable(id = "separate")
     }
 
     if(input$typeRating == "vs") {
@@ -131,7 +137,7 @@ shinyServer(function(input, output, session) {
     } else {
       shinyjs::enable(id = "rt")
     }
-    if(input$separate) {
+    if(input$separate | input$tabPanels == "compareShows") {
       shinyjs::disable(id = "dates") 
     } else {
       shinyjs::enable(id = "dates")
@@ -152,7 +158,7 @@ shinyServer(function(input, output, session) {
 	if(!input$separate) {
 	  plotRatings(filteredData(),background = input$background, trend = input$trend)
 	} else {
-	  plotRatings(filteredData(),background = input$background, trend = input$trend) + facet_wrap(~season, scales = "free")
+	  plotRatings(filteredData(),background = input$background, trend = input$trend) + facet_wrap(~season, scales = "free", ncol = 1)
 	}
       }
     }
@@ -188,13 +194,5 @@ shinyServer(function(input, output, session) {
     paste(secondName(), "has", secondEpCounter(),
 	  "episodes in this range.")
   })
-
-#   output$compareBot <- renderText({
-#     if(isNetflix()) {
-#       giveDetails(filterForNetflix(), input$plotTwoClick, "imdbRating", TRUE)
-#     } else {
-#       giveDetails(filteredData()[[2]], input$plotTwoClick, input$typeRating)
-#     }
-#   })
 })
 
