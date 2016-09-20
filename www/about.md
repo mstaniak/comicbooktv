@@ -24,4 +24,4 @@ Nielsen ratings are harder to understand
 ### Have any ideas?
 
 If you have data or ideas for interesting visualizations or improving this App, 
-contact me at [comicbooktv@fvemail.net](mailto:comicbooktv@fvemail). 
+contact me at [comicbooktv@vfqmail.net](mailto:comicbooktv@vqemail). 
