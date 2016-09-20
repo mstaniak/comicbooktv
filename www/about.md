@@ -8,14 +8,14 @@ output:
 ### How to use this App
 
 The first panel presents data about one show.
-You can view show's IMDb ratings, Nielse ratings or their comparison.
-Meaning of these ratings is discussed below on _About the data and download_ page.
+You can view show's IMDb ratings, Nielsen ratings as well as their comparison.
+Meaning of these ratings is explained on _About the data and download_ page.
 
-You can select seasons, ratings and dates ranges to identify best and worst episodes, see when the show started to loose or gain viewers, when it's quality improved and so on.  
-Linear trend can be added to the plot to help general tendency in the ratings.  
+You can select seasons, ratings and dates ranges to identify the best and the worst episodes, see when the show started to loose or gain viewers, when it's quality improved and so on.  
+Linear trend can be added to the plot to help see general tendency in the ratings.  
 
 On some plots a grey line can be displayed. 
-It is average ratings of all other shows that aired that week.  
+It stands for average rating of all other shows that aired that week.  
 Clicking a point shows more detailed information: air date, rating, number of people who voted and,
 if there were any other shows, their number in a chosen week.
 
