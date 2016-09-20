@@ -1,27 +1,34 @@
 ---
 title: "about"
-output: html_document
+output: 
+  html_document:
+    css:bootstrap.min.csf
 ---
 
 ### How to use this App
 
+The first panel presents data about one show.
+You can view show's IMDb ratings, Nielse ratings or their comparison.
+Meaning of these ratings is discussed below on _About the data and download_ page.
 
-Netflix shows are treated differently than other shows because of Netflix's buissness model.
-All the episodes are released on one day, so the time has no effect
+You can select seasons, ratings and dates ranges to identify best and worst episodes, see when the show started to loose or gain viewers, when it's quality improved and so on.  
+Linear trend can be added to the plot to help general tendency in the ratings.  
 
-### About the data
+On some plots a grey line can be displayed. 
+It is average ratings of all other shows that aired that week.  
+Clicking a point shows more detailed information: air date, rating, number of people who voted and,
+if there were any other shows, their number in a chosen week.
 
-The data was scrapped from three sources:
+Choosing _place seasons on separate panels_ options saves space that breaks between seasons take.
 
-* [IMDb](https://www.imdb.com) (user ratings, air dates, titles, channels)
-* [wikipedia](https://www.wikipedia.org) (Nielsen ratings and number of viewers for shows other than Arrow)
-* [tvseriesfinale](http://www.tvseriesfinale.com) (ratings for Arrow).
+Netflix shows are treated differently than other shows because of Netflix's business model.
+All episodes are released on one day, so all comparisons are done on season level.
 
-IMDb ratings are user submitted.  
- 
-Nielsen ratings are harder to understand
+Second panel allows comparing shows or rather shows' seasons in the same categories.
+
 
 ### Have any ideas?
 
-If you have data or ideas for interesting visualizations or improving this App, 
-contact me at [comicbooktv@vfqmail.net](mailto:comicbooktv@vqemail). 
+If you have interesting data on comicbook TV shows, ideas for visualizations and improving this App,
+or you'd like to collaborate on developing it, contact me at [comicbooktv@vfemail.net](mailto:comicbooktv@vfemail.net).
+

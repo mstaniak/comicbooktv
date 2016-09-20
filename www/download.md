@@ -3,6 +3,24 @@ title: "Data download"
 output: html_output
 ---
 
+### About the data
+
+All shows based on DC or Marvel comicbooks that aired on TV or Netflix since 2012 are presented.  
+IMDb ratings were chosen because of popularity (see [www.ale.com/siteinfo/imdb.com](alexa rank))
+and easy access to user-submitted ratings for each episode.  
+Nielsen ratings are usually reported in the form ratings/share.
+Ratings represent percentage of all television household that watched the episode of the show.
+Share wasn't used in this app. 
+These are basic numbers that describe live viewership.
+They don't include DVR, Hulu, etc.
+So called +3 or +7 ratings are interesting, but not as available.
+
+The data was scrapped from three sources:
+
+* [IMDb](https://www.imdb.com) (user ratings, air dates, titles, channels)
+* [wikipedia](https://www.wikipedia.org) (Nielsen ratings and number of viewers for shows other than Arrow)
+* [tvseriesfinale](http://www.tvseriesfinale.com) (ratings for Arrow).
+
 ### Download
 
 Data used in this App can be downloaded by clicking on this link:
