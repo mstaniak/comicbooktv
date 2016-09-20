@@ -85,7 +85,6 @@ shinyUI(
 		     includeMarkdown("www/about.md")),
 	    tabPanel("Download data", 
 		     value = "downloadData", 
-		     includeMarkdown("www/download.md")),
-	    tabPanel("Short summaries")),
+		     includeMarkdown("www/download.md"))),
 	  id = "tabPanels"))
 )))
