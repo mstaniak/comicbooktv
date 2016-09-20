@@ -142,24 +142,30 @@ shinyServer(function(input, output, session) {
     } else {
       shinyjs::enable(id = "dates")
     }
+
+    if(input$tabPanels == "compareShows") {
+      updateCheckboxInput(session, "separate",
+			  label = "Place shows on separate panels")
+    } else {
+      updateCheckboxInput(session, "separate",
+			  label = "Place seasons on separate panels")
+    }
+    if(input$typeRating == "vs" & input$tabPanels == "oneShow") {
+      shinyjs::disable(id = "separate")
+    } else {
+        shinyjs::enable(id = "separate")
+    }
   })
 
   output$oneShowPlot  <- renderPlot({
     if(isNetflix()) {
-      if(!input$separate) {
-	plotNetflix(filterForNetflix(), trend = input$trend) 
-      } else {
-	plotNetflix(filterForNetflix(), trend = input$trend) + facet_wrap(~season, scales = "free")
-      }
+      plotNetflix(filterForNetflix(), input$trend)
     } else {
       if(input$typeRating == "vs") {
-	plotRatingsCompareVS(filteredData(), trend = input$trend)    
+	plotRatingsCompareVS(filteredData(), trend = input$trend, separate = input$separate)    
       } else {
-	if(!input$separate) {
-	  plotRatings(filteredData(),background = input$background, trend = input$trend)
-	} else {
-	  plotRatings(filteredData(),background = input$background, trend = input$trend) + facet_wrap(~season, scales = "free", ncol = 1)
-	}
+	plotRatings(filteredData(), trend = input$trend,
+		    background = input$background, separate = input$separate)
       }
     }
 
@@ -167,7 +173,7 @@ shinyServer(function(input, output, session) {
   
   output$oneShowInfo <- renderText({
     if(isNetflix()) {
-      giveDetails(filterForNetflix(), input$plotOneClick, "imdbRating", TRUE)
+      giveShortDetails(filterForNetflix(), input$plotOneClick, input$firstSeasons)
     } else {
       giveDetails(filteredData(), input$plotOneClick, input$typeRating)
     }
@@ -180,7 +186,8 @@ shinyServer(function(input, output, session) {
       if(input$typeRating == "vs") {
         plotRatingsCompareVS(filteredData(), trend = input$trend)	
       } else {
-	plotRatings(filteredData(), background = input$background, trend = input$trend)
+	plotRatings(filteredData(), background = input$background,
+		    trend = input$trend, separate = input$separate)
       }
     }
   })
