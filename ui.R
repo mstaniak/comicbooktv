@@ -83,7 +83,7 @@ shinyUI(
 	    tabPanel("About this app",
 		     value = "aboutApp",
 		     includeMarkdown("www/about.md")),
-	    tabPanel("Download data", 
+	    tabPanel("About the data", 
 		     value = "downloadData", 
 		     includeMarkdown("www/download.md"))),
 	  id = "tabPanels"))
